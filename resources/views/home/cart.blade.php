@@ -19,6 +19,7 @@
 <!-- cart -->
 <div class="cart-section mt-150 mb-150">
   <div class="container">
+    <form class="form-cart">
     <div class="row">
       <div class="col-lg-8 col-md-12">
         <div class="cart-table-wrap">
@@ -35,13 +36,13 @@
             </thead>
             <tbody>
               @php
-                $checkoutTotal = 0;
+                $total_weight = 0;
               @endphp
               <input type="hidden" name="id_customer" value="{{ Auth::guard('webcustomer')->user()->id }}">
               @foreach ($carts as $cart)
               @php
-                $checkoutTotal += $cart->total;
                 $discount = $discounts->where('id_barang', $cart->product->id)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
+                $total_weight += 1 * $cart->jumlah;
               @endphp
               <input type="hidden" name="id_produk[]" value="{{ $cart->product->id }}">
               <input type="hidden" name="jumlah[]" value="{{ $cart->jumlah }}">
@@ -55,11 +56,11 @@
                 @else
                 <td class="product-price">{{ "Rp ". number_format($cart->product->price) }}</td>
                 @endif
-                <td class="product-quantity"><input type="number" placeholder="0"></td>
+                <td class="product-quantity">{{ $cart->jumlah }}</td>
                 <td class="product-total">{{ "Rp ". number_format($cart->total) }}</td>
               </tr>
               @endforeach
-              <input type="hidden" name="grand_total" value="{{ $checkoutTotal }}">
+              <input type="hidden" name="total_weight" id="total_weight" value="{{ $total_weight }}">
             </tbody>
           </table>
         </div>
@@ -77,34 +78,43 @@
             <tbody>
               <tr class="total-data">
                 <td><strong>Subtotal: </strong></td>
-                <td>$500</td>
+                <td class="cart-total">{{ $cart_total }}</td>
               </tr>
               <tr class="total-data">
                 <td><strong>Shipping: </strong></td>
-                <td>$45</td>
+                <td class="shipping-cost">0</td>
               </tr>
               <tr class="total-data">
                 <td><strong>Total: </strong></td>
-                <td>$545</td>
+                <input type="hidden" name="grand_total" class="grand_total">
+                <td class="amount grand-total">0</td>
               </tr>
             </tbody>
           </table>
           <div class="cart-buttons">
-            <a href="cart.html" class="boxed-btn">Update Cart</a>
-            <a href="checkout.html" class="boxed-btn black">Check Out</a>
+            <a href="#" class="boxed-btn black checkout">Check Out</a>
           </div>
         </div>
 
         <div class="coupon-section">
-          <h3>Apply Coupon</h3>
+          <h3>Calculate Shipping</h3>
           <div class="coupon-form-wrap">
-            <form action="index.html">
-              <p><input type="text" placeholder="Coupon"></p>
-              <p><input type="submit" value="Apply"></p>
-            </form>
+              <p>
+                <select name="provinsi" id="provinsi" class="provinsi">
+                  <option value="">Select Province</option>
+                  @foreach($provinsi->rajaongkir->results as $provinsi)
+                  <option value="{{ $provinsi->province_id }}">{{ $provinsi->province }}</option>
+                  @endforeach
+                </select>
+              </p>
+              <p>
+                <select name="kota" id="kota" class="kota"></select>
+              </p>
+              <p><a href="#" class="update-total">Update Totals</a></p>
           </div>
         </div>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -115,6 +125,33 @@
 @push('js')
   <script>
     $(function() {
+      $('.provinsi').change(function(){
+        $.ajax({
+          url : '/get_city/' + $(this).val(),
+          success : function (data){
+            data = JSON.parse(data)
+            option = ""
+            data.rajaongkir.results.map((kota)=> {
+              option += `<option value=${kota.city_id}>${kota.city_name}</option>`
+            })
+            $('.kota').html(option)
+          }
+        })
+      })
+      $('.update-total').click(function(e){
+        e.preventDefault()
+        var totalWeight = $('#total_weight').val();
+        $.ajax({
+          url : '/get_ongkir/' + $('.kota').val() + '/' + totalWeight,
+          success : function (data){
+            data = JSON.parse(data)
+            grandTotal = parseInt(data.rajaongkir.results[0].costs[0].cost[0].value) + parseInt($('.cart-total').text())
+            $('.shipping-cost').text(data.rajaongkir.results[0].costs[0].cost[0].value)
+            $('.grand-total').text(grandTotal)
+            $('.grand_total').val(grandTotal)
+          }
+        })
+      })
       $('.checkout').click(function(e){
         e.preventDefault()
         $.ajax({

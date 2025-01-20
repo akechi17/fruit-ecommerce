@@ -78,8 +78,9 @@
 								<li>
                   @if (Auth::guard('webcustomer')->check())
 									<div class="header-icons">
+										<a class="shopping-cart" href="/wishlist"><i class="fas fa-heart"></i></a>
 										<a class="shopping-cart" href="/cart"><i class="fas fa-shopping-cart"></i></a>
-										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+										<a href="/logout_customer">Logout</a>
 									</div>
                   @else
                   <a href="/login_customer">Sign In</a>

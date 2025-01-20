@@ -21,10 +21,24 @@ class UserSeeder extends Seeder
             'email_verified_at' => now()
         ]);
         User::create([
-            'name' => 'Admin',
+            'name' => 'Administrator',
             'email' => 'admin@gmail.com',
             'role' => 'admin',
             'password' => bcrypt('admin'),
+            'email_verified_at' => now()
+        ]);
+        User::create([
+            'name' => 'Manager',
+            'email' => 'manager@gmail.com',
+            'role' => 'manager',
+            'password' => bcrypt('manager'),
+            'email_verified_at' => now()
+        ]);
+        User::create([
+            'name' => 'Kurir',
+            'email' => 'kurir@gmail.com',
+            'role' => 'kurir',
+            'password' => bcrypt('kurir'),
             'email_verified_at' => now()
         ]);
     }

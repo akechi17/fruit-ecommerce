@@ -6,7 +6,9 @@ use App\Models\About;
 use App\Models\Discount;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Payment;
+use App\Models\Wishlist;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +37,15 @@ class HomeController extends Controller
         $cart->delete();
         return redirect('/cart');
     }
+    public function add_to_wishlist(Request $request){
+        $input = $request->all();
+        Wishlist::create($input);
+    }
+
+    public function delete_from_wishlist (Wishlist $wishlist){
+        $wishlist->delete();
+        return redirect('/wishlist');
+    }
 
     public function product($id_product){
         if (!Auth::guard('webcustomer')->user()) {
@@ -51,10 +62,97 @@ class HomeController extends Controller
             return redirect('/login_customer');
         }
 
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "key: ed0be3e808b51ae444bf13be133a03da"
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        }
+
+        $provinsi = json_decode($response);
         $carts = Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->get();
-        $discounts = Discount::all();
         $cart_total = Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->sum('total');
-        return view('home.cart', compact('carts','discounts', 'cart_total'));
+        $discounts = Discount::all();
+        return view('home.cart', compact('carts', 'provinsi', 'cart_total', 'discounts'));
+    }
+    public function wishlist(){
+        if (!Auth::guard('webcustomer')->user()) {
+            return redirect('/login_member');
+        }
+
+        $wishlists = Wishlist::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->get();
+        return view('home.wishlist', compact('wishlists'));
+    }
+    public function get_city($id){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/city?province=" . $id,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "key: ed0be3e808b51ae444bf13be133a03da"
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        }
+        return $response;
+    }
+    public function get_ongkir($destination, $weight){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "origin=22&destination=".$destination."&weight=".$weight."&courier=jne",
+        CURLOPT_HTTPHEADER => array(
+            "content-type: application/x-www-form-urlencoded",
+            "key: ed0be3e808b51ae444bf13be133a03da"
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        }
+        return $response;
     }
     public function checkout_orders(Request $request){
         $id = DB::table('orders')->insertGetId([
@@ -107,14 +205,64 @@ class HomeController extends Controller
         return redirect('/orders');
     }
 
-    public function orders(){
+    public function orders() {
         if (!Auth::guard('webcustomer')->user()) {
             return redirect('/login_customer');
         }
-        
-        $orders = Order::where('id_customer', Auth::guard('webcustomer')->user()->id)->get();
-        $payments = Payment::where('id_customer', Auth::guard('webcustomer')->user()->id)->get();
-        return view('home.orders', compact('orders', 'payments'));
+
+        $memberId = Auth::guard('webcustomer')->user()->id;
+
+        // Retrieve all orders and payments for the member
+        $orders = Order::where('id_customer', $memberId)->get();
+        $payments = Payment::where('id_customer', $memberId)->get();
+
+        // Initialize an array to hold order details
+        $orderdetails = [];
+
+        // Iterate over each order to retrieve its details
+        foreach ($orders as $order) {
+            $orderdetails[$order->id] = OrderDetail::where('id_order', $order->id)->get();
+        }
+
+        return view('home.orders', compact('orders', 'orderdetails', 'payments'));
+    }
+    public function getSnapToken($paymentId) {
+        $payment = Payment::find($paymentId);
+        if (!$payment) {
+            return response()->json(['error' => 'Payment not found'], 404);
+        }
+
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$isProduction = false;
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+
+        $customer = Auth::guard('webcustomer')->user();
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $payment->id,
+                'gross_amount' => $payment->jumlah,
+            ),
+            'customer_details' => array(
+                'first_name' => $customer->nama_member,
+                'email' => $customer->email,
+                'phone' => $customer->no_hp
+            ),
+        );
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return response()->json(['snapToken' => $snapToken]);
+    }
+
+    public function success(Request $request)
+    {
+        $paymentId = $request->query('payment_id');
+        $payment = Payment::findOrFail($paymentId);
+        $payment->status = 'DIBAYAR';
+        $payment->save();
+
+        return redirect()->route('home')->with('success', 'Payment successful!');
     }
 
     public function pesanan_selesai(Order $order){
