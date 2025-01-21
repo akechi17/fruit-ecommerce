@@ -18,7 +18,7 @@ class ReviewController extends Controller
 
     public function list(){
         if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+            return redirect('/dashboard');
         }
         return view('review.index');
     }

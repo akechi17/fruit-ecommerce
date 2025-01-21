@@ -1,6 +1,21 @@
 @extends('layout.home')
 @section('title', 'Checkout')
 @section('content')
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2 text-center">
+        <div class="breadcrumb-text">
+          <p>Fresh and Organic</p>
+          <h1>My Orders</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end breadcrumb section -->
+
 <section class="section-wrap checkout pb-70">
   <div class="container relative">
     <div class="row">
@@ -42,7 +57,6 @@
             <th>No</th>
             <th>Produk</th>
             <th>Tanggal</th>
-            <th>Total</th>
             <th>Status</th>
             <th>Aksi</th>
           </thead>
@@ -57,9 +71,8 @@
                   @else
                     <td></td>
                   @endif
-                  <td>{{ $detail->product->nama_barang }}</td>
+                  <td>{{ $detail->product->product_name }}</td>
                   <td>{{ $order->created_at }}</td>
-                  <td>Rp. {{ number_format($detail->total) }}</td>
                   <td>{{ $order->status }}</td>
                   <td>
                     @if ($order->status === 'Selesai')
@@ -71,7 +84,7 @@
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="reviewModalLabel{{ $detail->id }}">Review Produk {{ $detail->product->nama_barang }}</h5>
+                              <h5 class="modal-title" id="reviewModalLabel{{ $detail->id }}">Review Produk {{ $detail->product->product_name }}</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>

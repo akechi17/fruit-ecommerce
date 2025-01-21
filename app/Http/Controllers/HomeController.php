@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
+use App\Models\Review;
 use App\Models\Wishlist;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
@@ -22,8 +23,11 @@ class HomeController extends Controller
         return view('home.index', compact('products', 'discounts'));
     }
     
-    public function products($category){
-        $products = Product::where('category', $category)->where('stok', '>', 0)->get();
+    public function products($category)
+    {
+        $products = Product::where('category', $category)
+                        ->where('stok', '>', 0)
+                        ->paginate(1); // Display 9 products per page
         $discounts = Discount::all();
         return view('home.products', compact('products', 'discounts'));
     }
@@ -54,7 +58,7 @@ class HomeController extends Controller
 
         $product = Product::find($id_product);
         $discount = Discount::where('id_barang', $id_product)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
-        $latest_products = Product::where('stok', '>', 0)->orderByDesc('created_at')->offset(0)->limit(10)->get();
+        $latest_products = Product::where('stok', '>', 0)->orderByDesc('created_at')->offset(0)->limit(3)->get();
         return view('home.product', compact('product','discount' ,'latest_products'));
     }
     public function cart(){
@@ -91,6 +95,23 @@ class HomeController extends Controller
         $cart_total = Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->sum('total');
         $discounts = Discount::all();
         return view('home.cart', compact('carts', 'provinsi', 'cart_total', 'discounts'));
+    }
+    public function submitreview(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'rating' => 'required|integer|between:1,5',
+            'review' => 'required|string|max:255',
+        ]);
+
+        Review::create([
+            'id_customer' => Auth::guard('webcustomer')->user()->id,
+            'id_produk' => $request->product_id,
+            'review' => $request->review,
+            'rating' => $request->rating,
+        ]);
+
+        return redirect()->back()->with('success', 'Review submitted successfully.');
     }
     public function wishlist(){
         if (!Auth::guard('webcustomer')->user()) {

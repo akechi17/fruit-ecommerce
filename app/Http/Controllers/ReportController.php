@@ -33,7 +33,7 @@ class ReportController extends Controller
 
     public function index(Request $request){
         if (!(Auth::guard('web')->user()->role == 'owner')) {
-            return redirect('/home');
+            return redirect('/dashboard');
         }
         return view('report.index');
     }

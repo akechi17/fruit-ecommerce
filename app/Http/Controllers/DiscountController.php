@@ -17,7 +17,7 @@ class DiscountController extends Controller
 
     public function list(){
         if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+            return redirect('/dashboard');
         }
         $products = Product::all();
         return view('discount.index', compact('products'));

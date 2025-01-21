@@ -35,7 +35,7 @@ class AuthController extends Controller
             'success' => false,
             'message' => 'email or password is incorrect'
         ]);
-}
+    }
 
     protected function respondWithToken($token)
     {

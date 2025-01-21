@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->only(['list', 'confirmed_list', 'packed_list', 'sent_list', 'received_list', 'finished_list']);
-        $this->middleware('auth:api')->only(['store', 'update', 'destroy', 'ubah_status', 'baru', 'confirmed', 'packed', 'sent', 'received', 'finished' ]);
+        $this->middleware('auth')->only(['list', 'dikonfirmasi_list', 'dikemas_list', 'dikirim_list', 'diterima_list', 'selesai_list']);
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy', 'ubah_status', 'baru', 'dikonfirmasi', 'dikemas', 'dikirim', 'diterima', 'selesai' ]);
     }
 
     /**
@@ -23,7 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('customer')->get();
+        $orders = Order::with('member')->get();
 
         return response()->json([
             'data' => $orders
@@ -31,43 +31,49 @@ class OrderController extends Controller
     }
 
     public function list(){
-        if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+        $user = Auth::guard('web')->user();
+        if (!($user->role == 'admin' || $user->role == 'kurir')) {
+            return redirect('/dashboard');
         }
         return view('pesanan.index');
     }
 
     public function confirmed_list(){
-        if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+        $user = Auth::guard('web')->user();
+        if (!($user->role == 'admin' || $user->role == 'kurir')) {
+            return redirect('/dashboard');
         }
         return view('pesanan.confirmed');
     }
 
     public function packed_list(){
-        if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+        $user = Auth::guard('web')->user();
+        if (!($user->role == 'admin' || $user->role == 'kurir')) {
+            return redirect('/dashboard');
         }
         return view('pesanan.packed');
     }
 
     public function sent_list(){
-        if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+        $user = Auth::guard('web')->user();
+        if (!($user->role == 'admin' || $user->role == 'kurir')) {
+            return redirect('/dashboard');
         }
         return view('pesanan.sent');
     }
 
     public function received_list(){
-        if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+        $user = Auth::guard('web')->user();
+        if (!($user->role == 'admin' || $user->role == 'kurir')) {
+            return redirect('/dashboard');
         }
         return view('pesanan.received');
     }
 
     public function finished_list(){
-        if (!(Auth::guard('web')->user()->role == 'admin')) {
-            return redirect('/home');
+        $user = Auth::guard('web')->user();
+        if (!($user->role == 'admin' || $user->role == 'kurir')) {
+            return redirect('/dashboard');
         }
         return view('pesanan.finished');
     }

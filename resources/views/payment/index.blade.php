@@ -35,9 +35,9 @@
                             <th>
                             Status
                             </th>
-                            <th class='text-center'>
+                            {{-- <th class='text-center'>
                             Action
-                            </th>
+                            </th> --}}
                         </thead>
                         <tbody>
 
@@ -127,9 +127,6 @@
                             <td>${val.no_rekening}</td>
                             <td>${val.atas_nama}</td>
                             <td>${val.status}</td>
-                            <td>
-                                <a data-toggle="modal" href="#modal-form" data-id="${val.id}" class="btn btn-warning modal-ubah">Edit</a>
-                            </td>
                         </tr>
                         `;
                     });

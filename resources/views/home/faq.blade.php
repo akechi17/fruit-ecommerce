@@ -132,7 +132,7 @@
               <i class="fa fa-phone"></i><span>+1 (800) 888 5260 52 63</span>
             </li>
             <li>
-              <i class="fa fa-skype"></i><span>rafieshop</span>
+              <i class="fa fa-skype"></i><span>FreshyFresh</span>
             </li>
           </ul>
         </div>

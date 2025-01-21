@@ -2,185 +2,187 @@
 @section('title', 'About')
 
 @section('content')
-<div class="site-blocks-cover inner-page" style="background-image: url('../frontend/images/hero_1.jpg');">
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
   <div class="container">
     <div class="row">
-      <div class="col-lg-7 mx-auto align-self-center">
-        <div class=" text-center">
+      <div class="col-lg-8 offset-lg-2 text-center">
+        <div class="breadcrumb-text">
+          <p>We sale fresh fruits</p>
           <h1>About Us</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum obcaecati natus iure voluptatum eveniet harum recusandae ducimus saepe.</p>ˀ
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- end breadcrumb section -->
 
-<div class="site-section bg-light custom-border-bottom" data-aos="fade">
-  <div class="container">
-    <div class="row mb-5">
-      <div class="col-md-6">
-        <div class="block-16">
-          <figure>
-            <img src="../frontend/images/bg_1.jpg" alt="Image placeholder" class="img-fluid rounded">
-            <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-button popup-vimeo"><span
-                class="icon-play"></span></a>
-
-          </figure>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-5">
-
-
-        <div class="site-section-heading pt-3 mb-4">
-          <h2 class="text-black">How We Started</h2>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius repellat, dicta at laboriosam, nemo
-          exercitationem itaque eveniet architecto cumque, deleniti commodi molestias repellendus quos sequi hic fugiat
-          asperiores illum. Atque, in, fuga excepturi corrupti error corporis aliquam unde nostrum quas.</p>
-        <p>Accusantium dolor ratione maiores est deleniti nihil? Dignissimos est, sunt nulla illum autem in, quibusdam
-          cumque recusandae, laudantium minima repellendus.</p>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="site-section bg-light custom-border-bottom" data-aos="fade">
-  <div class="container">
-    <div class="row mb-5">
-      <div class="col-md-6 order-md-2">
-        <div class="block-16">
-          <figure>
-            <img src="../frontend/images/hero_1.jpg" alt="Image placeholder" class="img-fluid rounded">
-            <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-button popup-vimeo"><span
-                class="icon-play"></span></a>
-
-          </figure>
-        </div>
-      </div>
-      <div class="col-md-5 mr-auto">
-
-
-        <div class="site-section-heading pt-3 mb-4">
-          <h2 class="text-black">We Are Trusted Company</h2>
-        </div>
-        <p class="text-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius repellat, dicta at laboriosam, nemo
-          exercitationem itaque eveniet architecto cumque, deleniti commodi molestias repellendus quos sequi hic fugiat
-          asperiores illum. Atque, in, fuga excepturi corrupti error corporis aliquam unde nostrum quas.</p>
-        <p class="text-black">Accusantium dolor ratione maiores est deleniti nihil? Dignissimos est, sunt nulla illum autem in, quibusdam
-          cumque recusandae, laudantium minima repellendus.</p>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="site-section site-section-sm site-blocks-1 border-0" data-aos="fade">
+<!-- featured section -->
+<div class="feature-bg">
   <div class="container">
     <div class="row">
-      <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="">
-        <div class="icon mr-4 align-self-start">
-          <span class="icon-truck text-primary"></span>
-        </div>
-        <div class="text">
-          <h2>Free Shipping</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam. Integer accumsan
-            tincidunt fringilla.</p>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="100">
-        <div class="icon mr-4 align-self-start">
-          <span class="icon-refresh2 text-primary"></span>
-        </div>
-        <div class="text">
-          <h2>Free Returns</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam. Integer accumsan
-            tincidunt fringilla.</p>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="200">
-        <div class="icon mr-4 align-self-start">
-          <span class="icon-help text-primary"></span>
-        </div>
-        <div class="text">
-          <h2>Customer Support</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam. Integer accumsan
-            tincidunt fringilla.</p>
+      <div class="col-lg-7">
+        <div class="featured-text">
+          <h2 class="pb-3">Why <span class="orange-text">Fruitkha</span></h2>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 mb-4 mb-md-5">
+              <div class="list-box d-flex">
+                <div class="list-icon">
+                  <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div class="content">
+                  <h3>Home Delivery</h3>
+                  <p>sit voluptatem accusantium dolore mque laudantium, totam rem aperiam, eaque ipsa quae ab illo.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 mb-5 mb-md-5">
+              <div class="list-box d-flex">
+                <div class="list-icon">
+                  <i class="fas fa-money-bill-alt"></i>
+                </div>
+                <div class="content">
+                  <h3>Best Price</h3>
+                  <p>sit voluptatem accusantium dolore mque laudantium, totam rem aperiam, eaque ipsa quae ab illo.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 mb-5 mb-md-5">
+              <div class="list-box d-flex">
+                <div class="list-icon">
+                  <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="content">
+                  <h3>Custom Box</h3>
+                  <p>sit voluptatem accusantium dolore mque laudantium, totam rem aperiam, eaque ipsa quae ab illo.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="list-box d-flex">
+                <div class="list-icon">
+                  <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="content">
+                  <h3>Quick Refund</h3>
+                  <p>sit voluptatem accusantium dolore mque laudantium, totam rem aperiam, eaque ipsa quae ab illo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- end featured section -->
 
+<!-- shop banner -->
+<section class="shop-banner">
+    <div class="container">
+        <h3>December sale is on! <br> with big <span class="orange-text">Discount...</span></h3>
+          <div class="sale-percent"><span>Sale! <br> Upto</span>50% <span>off</span></div>
+          <a href="shop.html" class="cart-btn btn-lg">Shop Now</a>
+      </div>
+  </section>
+<!-- end shop banner -->
 
-<div class="site-section bg-light custom-border-bottom" data-aos="fade">
+<!-- team section -->
+<div class="mt-150">
   <div class="container">
-    <div class="row justify-content-center mb-5">
-      <div class="col-md-7 site-section-heading text-center pt-4">
-        <h2>The Team</h2>
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2 text-center">
+        <div class="section-title">
+          <h3>Our <span class="orange-text">Team</span></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+        </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6 col-lg-6 mb-5">
+      <div class="col-lg-4 col-md-6">
+        <div class="single-team-item">
+          <div class="team-bg team-bg-1"></div>
+          <h4>Jimmy Doe <span>Farmer</span></h4>
+          <ul class="social-link-team">
+            <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="single-team-item">
+          <div class="team-bg team-bg-2"></div>
+          <h4>Marry Doe <span>Farmer</span></h4>
+          <ul class="social-link-team">
+            <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
+        <div class="single-team-item">
+          <div class="team-bg team-bg-3"></div>
+          <h4>Simon Joe <span>Farmer</span></h4>
+          <ul class="social-link-team">
+            <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end team section -->
 
-        <div class="block-38 text-center">
-          <div class="block-38-img">
-            <div class="block-38-header">
-              <img src="../frontend/images/person_1.jpg" alt="Image placeholder" class="mb-4">
-              <h3 class="block-38-heading h4">Elizabeth Graham</h3>
-              <p class="block-38-subheading">CEO/Co-Founder</p>
+<!-- testimonail-section -->
+<div class="testimonail-section mt-80 mb-150">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1 text-center">
+        <div class="testimonial-sliders">
+          <div class="single-testimonial-slider">
+            <div class="client-avater">
+              <img src="assets/img/avaters/avatar1.png" alt="">
             </div>
-            <div class="block-38-body">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio
-                recusandae doloribus ut fugit officia voluptate soluta. </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-6 mb-5">
-        <div class="block-38 text-center">
-          <div class="block-38-img">
-            <div class="block-38-header">
-              <img src="../frontend/images/person_2.jpg" alt="Image placeholder" class="mb-4">
-              <h3 class="block-38-heading h4">Jennifer Greive</h3>
-              <p class="block-38-subheading">Co-Founder</p>
-            </div>
-            <div class="block-38-body">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio
-                recusandae doloribus ut fugit officia voluptate soluta. </p>
+            <div class="client-meta">
+              <h3>Saira Hakim <span>Local shop owner</span></h3>
+              <p class="testimonial-body">
+                " Sed ut perspiciatis unde omnis iste natus error veritatis et  quasi architecto beatae vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium "
+              </p>
+              <div class="last-icon">
+                <i class="fas fa-quote-right"></i>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-6 mb-5">
-        <div class="block-38 text-center">
-          <div class="block-38-img">
-            <div class="block-38-header">
-              <img src="../frontend/images/person_3.jpg" alt="Image placeholder" class="mb-4">
-              <h3 class="block-38-heading h4">Patrick Marx</h3>
-              <p class="block-38-subheading">Marketing</p>
+          <div class="single-testimonial-slider">
+            <div class="client-avater">
+              <img src="assets/img/avaters/avatar2.png" alt="">
             </div>
-            <div class="block-38-body">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio
-                recusandae doloribus ut fugit officia voluptate soluta. </p>
+            <div class="client-meta">
+              <h3>David Niph <span>Local shop owner</span></h3>
+              <p class="testimonial-body">
+                " Sed ut perspiciatis unde omnis iste natus error veritatis et  quasi architecto beatae vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium "
+              </p>
+              <div class="last-icon">
+                <i class="fas fa-quote-right"></i>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-6 mb-5">
-        <div class="block-38 text-center">
-          <div class="block-38-img">
-            <div class="block-38-header">
-              <img src="../frontend/images/person_4.jpg" alt="Image placeholder" class="mb-4">
-              <h3 class="block-38-heading h4">Mike Coolbert</h3>
-              <p class="block-38-subheading">Sales Manager</p>
+          <div class="single-testimonial-slider">
+            <div class="client-avater">
+              <img src="assets/img/avaters/avatar3.png" alt="">
             </div>
-            <div class="block-38-body">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio
-                recusandae doloribus ut fugit officia voluptate soluta. </p>
+            <div class="client-meta">
+              <h3>Jacob Sikim <span>Local shop owner</span></h3>
+              <p class="testimonial-body">
+                " Sed ut perspiciatis unde omnis iste natus error veritatis et  quasi architecto beatae vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium "
+              </p>
+              <div class="last-icon">
+                <i class="fas fa-quote-right"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -188,4 +190,5 @@
     </div>
   </div>
 </div>
+<!-- end testimonail-section -->
 @endsection

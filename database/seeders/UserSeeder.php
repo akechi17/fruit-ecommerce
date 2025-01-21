@@ -13,20 +13,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Owner',
-            'email' => 'owner@gmail.com',
-            'role' => 'owner',
-            'password' => bcrypt('owner'),
-            'email_verified_at' => now()
-        ]);
-        User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@gmail.com',
-            'role' => 'admin',
-            'password' => bcrypt('admin'),
-            'email_verified_at' => now()
-        ]);
+        // User::create([
+        //     'name' => 'Owner',
+        //     'email' => 'owner@gmail.com',
+        //     'role' => 'owner',
+        //     'password' => bcrypt('owner'),
+        //     'email_verified_at' => now()
+        // ]);
+        // User::create([
+        //     'name' => 'Administrator',
+        //     'email' => 'admin@gmail.com',
+        //     'role' => 'admin',
+        //     'password' => bcrypt('admin'),
+        //     'email_verified_at' => now()
+        // ]);
         User::create([
             'name' => 'Manager',
             'email' => 'manager@gmail.com',

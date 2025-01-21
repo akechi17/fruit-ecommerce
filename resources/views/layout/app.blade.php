@@ -1,155 +1,246 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../admin/assets/img/favicon.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>@yield('title')</title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
-  <link href="../admin/assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="../admin/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../admin/assets/demo/demo.css" rel="stylesheet" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@yield('title')</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="wrapper ">
-        <div class="sidebar" data-color="white" data-active-color="danger">
-            <div class="logo">
-                <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Freshy <sup>Fresh</sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+            @if (Auth::guard('web')->user()->role == 'admin')  
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#master"
+                    aria-expanded="true" aria-controls="master">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Data Master</span>
                 </a>
-                <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-                Your Logo
-                </a>
-            </div>
-            <div class="sidebar-wrapper">
-                <ul class="nav" id="accordionSidebar">
-                    <li class="{{ (Request::is('home') ? 'active' : '') ? 'active' : '' }}">
-                        <a href="/home">
-                        <i class="nc-icon nc-bank"></i>
-                        <p>Home</p>
-                        </a>
-                    </li>
-                    @if (Auth::guard('web')->user()->role == 'admin')
-                    <li class="{{ (Request::is('barang') ? 'active' : '') ? 'active' : '' }}">
-                        <a href="/barang">
-                        <i class="nc-icon nc-single-02"></i>
-                        <p>Products</p>
-                        </a>
-                    </li>
-                    <li class="{{ (Request::is('discounts') ? 'active' : '') ? 'active' : '' }}">
-                        <a href="/discounts">
-                        <i class="nc-icon nc-single-02"></i>
-                        <p>Discounts</p>
-                        </a>
-                    </li>
-                    <li class="{{ (Request::is('payment') ? 'active' : '') ? 'active' : '' }}">
-                        <a href="/payment">
-                        <i class="nc-icon nc-bell-55"></i>
-                        <p>Payment</p>
-                        </a>
-                    </li>
-                    <li class="{{ (Request::is('pesanan/*') ? 'active' : '') ? 'active' : '' }} nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pesanan">
-                            <i class="nc-icon nc-bell-55"></i>
-                            <p>Order</p>
-                        </a>
-                        <div id="pesanan" class="collapse" aria-labelledby="orderDropdown" data-parent="#accordionSidebar">
-                            <div class="py-2 collapse-inner rounded bg-white">
-                                <a class="collapse-item" href="/pesanan/baru">New Orders</a>
-                                <a class="collapse-item" href="/pesanan/confirmed">Confirmed Orders</a>
-                                <a class="collapse-item" href="/pesanan/packed">Packed Orders</a>
-                                <a class="collapse-item" href="/pesanan/sent">Sent Orders</a>
-                                <a class="collapse-item" href="/pesanan/received">Received Orders</a>
-                                <a class="collapse-item" href="/pesanan/finished">Finished Orders</a>
-                            </div>
-                        </div>
-                    </li>
-                    @endif
-                    @if (Auth::guard('web')->user()->role == 'owner')
-                    <li class="{{ (Request::is('report') ? 'active' : '') ? 'active' : '' }}">
-                        <a href="/report">
-                        <i class="nc-icon nc-single-02"></i>
-                        <p>Order Report</p>
-                        </a>
-                    </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-        <div class="main-panel" style="height: 100vh;">
-            <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <div class="navbar-toggle">
-                        <button type="button" class="navbar-toggler">
-                            <span class="navbar-toggler-bar bar1"></span>
-                            <span class="navbar-toggler-bar bar2"></span>
-                            <span class="navbar-toggler-bar bar3"></span>
-                        </button>
-                        </div>
-                        <a class="navbar-brand" href="javascript:;">@yield('title')</a>
+                <div id="master" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/barang">Data Barang</a>
+                        <a class="collapse-item" href="/discounts">Data Diskon</a>
                     </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pesanan"
+                    aria-expanded="true" aria-controls="pesanan">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Data Pesanan</span>
+                </a>
+                <div id="pesanan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/pesanan/new">Pesanan Baru</a>
+                        <a class="collapse-item" href="/pesanan/confirmed">Pesanan Dikonfirmasi</a>
+                        <a class="collapse-item" href="/pesanan/packed">Pesanan Dikemas</a>
+                        <a class="collapse-item" href="/pesanan/sent">Pesanan Dikirim</a>
+                        <a class="collapse-item" href="/pesanan/received">Pesanan Diterima</a>
+                        <a class="collapse-item" href="/pesanan/finished">Pesanan Selesai</a>
+                    </div>
+                </div>
+            </li>
+            @endif
+            @if (Auth::guard('web')->user()->role == 'kurir')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pesanan"
+                    aria-expanded="true" aria-controls="pesanan">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Data Pesanan</span>
+                </a>
+                <div id="pesanan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/pesanan/packed">Pesanan Dikemas</a>
+                        <a class="collapse-item" href="/pesanan/sent">Pesanan Dikirim</a>
+                        <a class="collapse-item" href="/pesanan/received">Pesanan Diterima</a>
+                        <a class="collapse-item" href="/pesanan/finished">Pesanan Selesai</a>
+                    </div>
+                </div>
+            </li>
+            @endif 
+            @if (Auth::guard('web')->user()->role == 'owner')  
+            <li class="nav-item">
+                <a class="nav-link" href="/payment">
+                    <i class="fas fa-fw fa-credit-card"></i>
+                    <span>Laporan Pembayaran</span>
+                </a>
+            </li>  
+            <li class="nav-item">
+                <a class="nav-link" href="/transaksi">
+                    <i class="fas fa-fw fa-globe"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/report">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Laporan Pesanan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tentang">
+                    <i class="fas fa-fw fa-globe"></i>
+                    <span>About</span>
+                </a>
+            </li>
+            @endif
+            @if (Auth::guard('web')->user()->role == 'manager')
+            <li class="nav-item">
+                <a class="nav-link" href="/supplier">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Supplier</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/transaksi">
+                    <i class="fas fa-fw fa-globe"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/payment">
+                    <i class="fas fa-fw fa-credit-card"></i>
+                    <span>Laporan Pembayaran</span>
+                </a>
+            </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Logout</span></a>
+            </li>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
                     </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link">
-                                    {{ Auth::guard('web')->user()->name }}
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::guard('web')->user()->name }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="../sbadmin2/img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="/logout">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/logout"><span class="btn btn-round btn-danger ms-3">Log Out</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- End Navbar -->
-            @yield('content')
-            <footer class="footer">
-                <div class="container-fluid">
-                <div class="row">
-                    <nav class="footer-nav">
-                    <ul>
-                        <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                        <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                        <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
+                            </div>
+                        </li>
+
                     </ul>
-                    </nav>
-                    <div class="credits ml-auto">
-                    <span class="copyright">
-                        © 2020, made with <i class="fa fa-heart heart"></i> by Creative Tim
-                    </span>
-                    </div>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">@yield('title')</h1>
+                    @yield('content')
+
                 </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; FreshyFresh 2025</span>
+                    </div>
                 </div>
             </footer>
-        </div>
-    </div>
+            <!-- End of Footer -->
 
-    <script src="../admin/assets/js/core/jquery.min.js"></script>
-    <script src="../admin/assets/js/core/popper.min.js"></script>
-    <script src="../admin/assets/js/core/bootstrap.min.js"></script>
-    <script src="../admin/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <!--  Google Maps Plugin    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-    <!-- Chart JS -->
-    <script src="../admin/assets/js/plugins/chartjs.min.js"></script>
-    <!--  Notifications Plugin    -->
-    <script src="../admin/assets/js/plugins/bootstrap-notify.js"></script>
-    <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../admin/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../sbadmin2/vendor/jquery/jquery.min.js"></script>
+    <script src="../sbadmin2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../sbadmin2/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../sbadmin2/js/sb-admin-2.min.js"></script>
+    <script src="../sbadmin2/vendor/chart.js/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
 
     @stack('js')
 

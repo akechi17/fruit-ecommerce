@@ -2,53 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
+use App\Models\Purchase;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
-
-class PaymentController extends Controller
+class PurchaseController extends Controller
 {
     public function __construct(){
         $this->middleware('auth')->only(['list']);
         $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
-    
-    public function list(){
+
+    public function list(Request $request){
         if ((Auth::guard('web')->user()->role == 'admin')) {
             return redirect('/dashboard');
         }
-        return view('payment.index');
+        
+        $suppliers = Supplier::all();
+        return view('purchase.index', compact('suppliers'));
     }
 
     public function index()
     {
-        $payments = Payment::all();
+        $purchases = Purchase::with('supplier')->get();
 
         return response()->json([
-            'data' => $payments
+            'success' => true,
+            'data' => $purchases
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'nama_kategori' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
+            'product' => 'required|string',
+            'supplier_id' => 'required|string',
+            'kuantitas' => 'required|integer',
+            'total_harga' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -59,40 +51,29 @@ class PaymentController extends Controller
 
         $input = $request->all();
 
-        $payment = Payment::create($input);
+        $purchase = Purchase::create($input);
         return response()->json([
             'success' => true,
             'message' => 'success',
-            'data' => $payment
+            'data' => $purchase
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Payment $payment)
+    public function show(Purchase $purchase)
     {
         return response()->json([
             'success' => true,
-            'data' => $payment
+            'data' => $purchase
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, Purchase $purchase)
     {
         $validator = Validator::make($request->all(),[
-            'tanggal' => 'required'
+            'product' => 'required|string',
+            'supplier_id' => 'required|string',
+            'kuantitas' => 'required|integer',
+            'total_harga' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -101,23 +82,22 @@ class PaymentController extends Controller
            );
         }
 
-        $payment->update([
-            'status' => request('status')
-        ]);
+        $input = $request->all();
+
+        $purchase->update($input);
         return response()->json([
             'success' => true,
             'message' => 'success',
-            'data' => $payment
+            'data' => $purchase
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Payment $payment)
+    public function destroy(Purchase $purchase)
     {
-        File::delete('uploads/'. $payment->gambar);
-        $payment->delete();
+        $purchase->delete();
 
         return response()->json([
             'success' => true,

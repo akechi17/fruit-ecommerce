@@ -10,6 +10,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +41,10 @@ Route::get('/barang', [ProductController::class, 'list']);
 Route::get('/discounts', [DiscountController::class, 'list']);
 Route::get('/reviews', [ReviewController::class, 'list']);
 Route::get('/payment', [PaymentController::class, 'list']);
+Route::get('/supplier', [SupplierController::class, 'list']);
+Route::get('/transaksi', [PurchaseController::class, 'list']);
 
-Route::get('/pesanan/baru', [OrderController::class, 'list']);
+Route::get('/pesanan/new', [OrderController::class, 'list']);
 Route::get('/pesanan/confirmed', [OrderController::class, 'confirmed_list']);
 Route::get('/pesanan/sent', [OrderController::class, 'sent_list']);
 Route::get('/pesanan/packed', [OrderController::class, 'packed_list']);
@@ -49,7 +53,7 @@ Route::get('/pesanan/finished', [OrderController::class, 'finished_list']);
 
 Route::get('/report', [ReportController::class, 'index']);
 
-Route::get('/home', [DashboardController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/get_city/{id}', [HomeController::class, 'get_city']);
 Route::get('/get_ongkir/{destination}/{weight}', [HomeController::class, 'get_ongkir']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -65,6 +69,8 @@ Route::get('/faq', [HomeController::class, 'faq']);
 
 Route::post('/add_to_cart', [HomeController::class, 'add_to_cart']);
 Route::get('/delete_from_cart/{cart}', [HomeController::class, 'delete_from_cart']);
+Route::post('/add_to_wishlist', [HomeController::class, 'add_to_wishlist']);
+Route::get('/delete_from_wishlist/{wishlist}', [HomeController::class, 'delete_from_wishlist']);
 Route::get('/get_city/{id}', [HomeController::class, 'get_city']);
 Route::get('/get_ongkir/{destination}/{weight}', [HomeController::class, 'get_ongkir']);
 Route::post('/checkout_orders', [HomeController::class, 'checkout_orders']);
@@ -72,3 +78,4 @@ Route::post('/payments', [HomeController::class, 'payments']);
 Route::post('/pesanan_selesai/{order}', [HomeController::class, 'pesanan_selesai']);
 Route::get('/get-snap-token/{paymentId}', [HomeController::class, 'getSnapToken']);
 Route::get('/success', [HomeController::class, 'success'])->name('payment.success');
+Route::post('/submit_review', [HomeController::class, 'submitreview']);

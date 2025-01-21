@@ -2,53 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
+use App\Models\Supplier;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
-
-class PaymentController extends Controller
+class SupplierController extends Controller
 {
     public function __construct(){
         $this->middleware('auth')->only(['list']);
         $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
     }
-    
+
     public function list(){
-        if ((Auth::guard('web')->user()->role == 'admin')) {
+        if (!(Auth::guard('web')->user()->role == 'manager')) {
             return redirect('/dashboard');
         }
-        return view('payment.index');
+        return view('supplier.index');
     }
 
     public function index()
     {
-        $payments = Payment::all();
+        $suppliers = Supplier::all();
 
         return response()->json([
-            'data' => $payments
+            'success' => true,
+            'data' => $suppliers
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'nama_kategori' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required|image|mimes:jpg,png,jpeg,webp'
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -59,40 +48,29 @@ class PaymentController extends Controller
 
         $input = $request->all();
 
-        $payment = Payment::create($input);
+        $supplier = Supplier::create($input);
         return response()->json([
             'success' => true,
             'message' => 'success',
-            'data' => $payment
+            'data' => $supplier
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Payment $payment)
+    public function show(Supplier $supplier)
     {
         return response()->json([
             'success' => true,
-            'data' => $payment
+            'data' => $supplier
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, Supplier $supplier)
     {
         $validator = Validator::make($request->all(),[
-            'tanggal' => 'required'
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -101,23 +79,22 @@ class PaymentController extends Controller
            );
         }
 
-        $payment->update([
-            'status' => request('status')
-        ]);
+        $input = $request->all();
+
+        $supplier->update($input);
         return response()->json([
             'success' => true,
             'message' => 'success',
-            'data' => $payment
+            'data' => $supplier
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Payment $payment)
+    public function destroy(Supplier $supplier)
     {
-        File::delete('uploads/'. $payment->gambar);
-        $payment->delete();
+        $supplier->delete();
 
         return response()->json([
             'success' => true,

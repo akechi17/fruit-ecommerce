@@ -41,6 +41,7 @@
               <input type="number" class="jumlah" title="Qty" step="1" min="1" placeholder="Jumlah (Kg)">
             </form>
             <a href="#" class="cart-btn add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+            <a href="#" class="cart-btn add-to-wishlist"><i class="fa fa-heart"></i> Add to Wishlist</a>
             <p><strong>Stok: </strong>{{ $product->stok }}</p>
           </div>
           <h4>Share:</h4>
@@ -69,36 +70,22 @@
       </div>
     </div>
     <div class="row">
+      @foreach ($latest_products as $product)
       <div class="col-lg-4 col-md-6 text-center">
         <div class="single-product-item">
           <div class="product-image">
-            <a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+            <a href="/store/{{ $product->id }}"><img src="../uploads/{{ $product->foto1 }}" alt=""></a>
           </div>
-          <h3>Strawberry</h3>
-          <p class="product-price"><span>Per Kg</span> 85$ </p>
-          <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+          <h3>{{ $product->product_name }}</h3>
+          @if ($discount)
+            <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discount->percentage / 100)) }} </p>
+          @else
+            <p class="product-price"><span>Per Kg</span> RP {{ number_format($product->price) }} </p>
+          @endif
+          <a href="/store/{{ $product->id }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 text-center">
-        <div class="single-product-item">
-          <div class="product-image">
-            <a href="single-product.html"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
-          </div>
-          <h3>Berry</h3>
-          <p class="product-price"><span>Per Kg</span> 70$ </p>
-          <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 offset-lg-0 offset-md-3 text-center">
-        <div class="single-product-item">
-          <div class="product-image">
-            <a href="single-product.html"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
-          </div>
-          <h3>Lemon</h3>
-          <p class="product-price"><span>Per Kg</span> 35$ </p>
-          <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-        </div>
-      </div>
+      @endforeach
     </div>
   </div>
 </div>
@@ -135,6 +122,28 @@
           },
           success : function (data) {
             window.location.href = '/cart';
+          }
+        });
+      })
+      $('.add-to-wishlist').click(function(e){
+        e.preventDefault();
+        id_customer = {{Auth::guard('webcustomer')->user()->id}}
+        id_barang = {{ $product->id }}
+        is_checkout = 0
+
+        $.ajax({
+          url : "/add_to_wishlist",
+          method : "POST",
+          headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+          },
+          data : {
+            id_customer,
+            id_barang,
+            is_checkout,
+          },
+          success : function (data) {
+            window.location.href = '/wishlist';
           }
         });
       })

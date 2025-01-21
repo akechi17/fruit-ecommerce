@@ -50,14 +50,14 @@
 					<div class="main-menu-wrap">
 						<!-- logo -->
 						<div class="site-logo">
-							<a href="index.html">
-                @php
-                  $about = App\Models\About::first();
-                  if (Auth::guard('webcustomer')->check()){
-                  $user_id = Illuminate\Support\Facades\Auth::guard('webcustomer')->user()->id;
-                  $cart_total = App\Models\Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->count();
-                  }
-                @endphp
+							<a href="/">
+								@php
+								$about = App\Models\About::first();
+								if (Auth::guard('webcustomer')->check()){
+								$user_id = Illuminate\Support\Facades\Auth::guard('webcustomer')->user()->id;
+								$cart_total = App\Models\Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->count();
+								}
+								@endphp
 								<img src="../frontend/assets/img/logo.png" alt="">
 							</a>
 						</div>
@@ -68,13 +68,14 @@
 							<ul>
 								<li class="{{ (Request::is('/') ? 'current-list-item' : '') ? 'current-list-item' : '' }}"><a href="/">Home</a></li>
 								<li class="{{ (Request::is('about') ? 'current-list-item' : '') ? 'current-list-item' : '' }}"><a href="/about">About</a></li>
-								<li><a href="/contact">Contact</a></li>
-								<li><a href="/stores/buah">Shop</a>
+								<li class="{{ (Request::is('contact') ? 'current-list-item' : '') ? 'current-list-item' : '' }}"><a href="/contact">Contact</a></li>
+								<li class="{{ (Request::is('stores/*') ? 'current-list-item' : '') ? 'current-list-item' : '' }}"><a href="/stores/buah">Shop</a>
 									<ul class="sub-menu">
 										<li><a href="/stores/buah">Buah</a></li>
 										<li><a href="/stores/sayur">Sayur</a></li>
 									</ul>
 								</li>
+								<li class="{{ (Request::is('orders') ? 'current-list-item' : '') ? 'current-list-item' : '' }}"><a href="/orders">My Orders</a></li>
 								<li>
                   @if (Auth::guard('webcustomer')->check())
 									<div class="header-icons">
