@@ -134,7 +134,7 @@
           @else
             <p class="product-price"><span>Per Kg</span> RP {{ number_format($product->price) }} </p>
           @endif
-          <a href="/store/{{ $product->id }}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+          <a href="/store/{{ $product->id }}" class="cart-btn">View Product</a>
         </div>
       </div>
       @endforeach
