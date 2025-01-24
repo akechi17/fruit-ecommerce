@@ -14,13 +14,13 @@ class AboutSeeder extends Seeder
     public function run(): void
     {
         About::create([
-            'judul_website' => 'Zako',
+            'judul_website' => 'Toko Sayur',
             'logo' => 'logo.png',
-            'deskripsi' => 'ashiap zaky bin fery',
+            'deskripsi' => 'Toko Sayur Freshy Fresh',
             'alamat' => 'Jl. Karadenan No. 7',
-            'email' => 'zaky@gmail.com',
+            'email' => 'rena@gmail.com',
             'telepon' => '081234567890',
-            'atas_nama' => 'Achmad Zaky',
+            'atas_nama' => 'Rena Adsaef Selis Ramina',
             'no_rekening' => '081234567890'
         ]);
     }

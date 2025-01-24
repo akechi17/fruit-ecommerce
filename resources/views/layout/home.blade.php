@@ -58,7 +58,7 @@
 								$cart_total = App\Models\Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->count();
 								}
 								@endphp
-								<img src="../frontend/assets/img/logo.png" alt="">
+								<img src="/uploads/{{ $about->logo }}" alt="">
 							</a>
 						</div>
 						<!-- logo -->

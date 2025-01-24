@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -52,6 +53,9 @@ Route::get('/pesanan/received', [OrderController::class, 'received_list']);
 Route::get('/pesanan/finished', [OrderController::class, 'finished_list']);
 
 Route::get('/report', [ReportController::class, 'index']);
+
+Route::get('/tentang', [AboutController::class, 'index']);
+Route::post('/tentang/{about}', [AboutController::class, 'update']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/get_city/{id}', [HomeController::class, 'get_city']);
