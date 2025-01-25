@@ -19,8 +19,7 @@
 <section class="section-wrap checkout pb-70">
   <div class="container relative">
     <div class="row">
-
-      <div class="ecommerce col-xs-12">
+      <div class="ecommerce col-md-12 py-5">
         <h2>My Payments</h2>
         <table class="table table-ordered table-hover table-stripped">
           <thead>
@@ -50,7 +49,7 @@
         </table>
       </div> <!-- end ecommerce -->
 
-      <div class="ecommerce col-xs-12">
+      <div class="ecommerce col-md-12 pb-5">
         <h2>My Orders</h2>
         <table class="table table-ordered table-hover table-stripped">
           <thead>
