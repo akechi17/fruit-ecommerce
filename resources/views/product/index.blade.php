@@ -93,14 +93,6 @@
                           <input type="file" class="form-control" name="foto1">
                       </div>
                       <div class="form-group">
-                          <label for="foto2">Image 2</label>
-                          <input type="file" class="form-control" name="foto2">
-                      </div>
-                      <div class="form-group">
-                          <label for="foto3">Image 3</label>
-                          <input type="file" class="form-control" name="foto3">
-                      </div>
-                      <div class="form-group">
                           <label for="deskripsi">Description</label>
                           <textarea id="deskripsi" class="form-control" cols="30" rows="10" name="deskripsi" placeholder="Description" required></textarea>
                       </div>
@@ -136,8 +128,6 @@
                             <td>${val.price}</td>
                             <td>${val.stok}</td>
                             <td><img src="/uploads/${val.foto1}" width="150" /></td>
-                            <td><img src="/uploads/${val.foto2}" width="150" /></td>
-                            <td><img src="/uploads/${val.foto3}" width="150" /></td>
                             <td>${val.deskripsi}</td>
                             <td>
                                 <a data-toggle="modal" href="#modal-form" data-id="${val.id}" class="btn btn-warning modal-ubah">Edit</a>
