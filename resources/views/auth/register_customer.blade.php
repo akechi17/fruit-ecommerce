@@ -60,7 +60,7 @@
                           </div>
                           <div class="form-group">
                               <label for="remember-me" class="text-info"><span></span><span></span></label><br>
-                              <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                              <input type="submit" class="btn btn-info btn-md" value="submit">
                           </div>
                           <div id="register-link" class="text-right">
                               <a href="/login_customer" class="text-info">Sign in here</a>
