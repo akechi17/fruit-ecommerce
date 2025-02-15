@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\About;
 use App\Models\Discount;
+use App\Models\DiscountCategory;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -20,7 +21,8 @@ class HomeController extends Controller
     public function index(){
         $products = Product::where('stok', '>', 0)->skip(0)->take(8)->get();
         $discounts = Discount::all();
-        return view('home.index', compact('products', 'discounts'));
+        $discountcategories = DiscountCategory::all();
+        return view('home.index', compact('products', 'discounts', 'discountcategories'));
     }
     
     public function products($category)
@@ -29,7 +31,8 @@ class HomeController extends Controller
                         ->where('stok', '>', 0)
                         ->paginate(1); // Display 9 products per page
         $discounts = Discount::all();
-        return view('home.products', compact('products', 'discounts'));
+        $discountcategories = DiscountCategory::all();
+        return view('home.products', compact('products', 'discounts', 'discountcategories'));
     }
 
     public function add_to_cart(Request $request){
@@ -58,8 +61,9 @@ class HomeController extends Controller
 
         $product = Product::find($id_product);
         $discount = Discount::where('id_barang', $id_product)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
+        $discountcategory = DiscountCategory::where('category', $product->category)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
         $latest_products = Product::where('stok', '>', 0)->orderByDesc('created_at')->offset(0)->limit(3)->get();
-        return view('home.product', compact('product','discount' ,'latest_products'));
+        return view('home.product', compact('product','discount' ,'latest_products', 'discountcategory'));
     }
     public function cart(){
         if (!Auth::guard('webcustomer')->user()) {
@@ -94,7 +98,8 @@ class HomeController extends Controller
         $carts = Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->get();
         $cart_total = Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->sum('total');
         $discounts = Discount::all();
-        return view('home.cart', compact('carts', 'provinsi', 'cart_total', 'discounts'));
+        $discountcategories = DiscountCategory::all();
+        return view('home.cart', compact('carts', 'provinsi', 'cart_total', 'discounts', 'discountcategories'));
     }
     public function submitreview(Request $request)
     {
@@ -119,7 +124,9 @@ class HomeController extends Controller
         }
 
         $wishlists = Wishlist::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->get();
-        return view('home.wishlist', compact('wishlists'));
+        $discounts = Discount::all();
+        $discountcategories = DiscountCategory::all();
+        return view('home.wishlist', compact('wishlists', 'discounts', 'discountcategories'));
     }
     public function get_city($id){
         $curl = curl_init();

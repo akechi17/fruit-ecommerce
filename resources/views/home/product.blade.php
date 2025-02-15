@@ -30,8 +30,12 @@
       <div class="col-md-7">
         <div class="single-product-content">
           <h3>{{ $product->product_name }}</h3>
-          @if ($discount)
+          @if ($discount && $discountcategory)
+            <p class="single-product-pricing"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - ($discount->percentage + $discountcategory->percentage) / 100)) }}</p>
+          @elseif ($discount)
             <p class="single-product-pricing"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discount->percentage / 100)) }}</p>
+          @elseif ($discountcategory)
+            <p class="single-product-pricing"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discountcategory->percentage / 100)) }}</p>
           @else
             <p class="single-product-pricing"><span>Per Kg</span> Rp. {{ number_format($product->price) }}</p>
           @endif
@@ -77,10 +81,14 @@
             <a href="/store/{{ $product->id }}"><img src="../uploads/{{ $product->foto1 }}" alt=""></a>
           </div>
           <h3>{{ $product->product_name }}</h3>
-          @if ($discount)
-            <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discount->percentage / 100)) }} </p>
+          @if ($discount && $discountcategory)
+          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - ($discount->percentage + $discountcategory->percentage) / 100)) }} </p>
+          @elseif ($discount)
+          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discount->percentage / 100)) }} </p>
+          @elseif ($discountcategory)
+          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discountcategory->percentage / 100)) }} </p>
           @else
-            <p class="product-price"><span>Per Kg</span> RP {{ number_format($product->price) }} </p>
+          <p class="product-price"><span>Per Kg</span> RP {{ number_format($product->price) }} </p>
           @endif
           <a href="/store/{{ $product->id }}" class="cart-btn">View Product</a>
         </div>
@@ -100,8 +108,12 @@
         id_customer = {{Auth::guard('webcustomer')->user()->id}}
         id_barang = {{ $product->id }}
         jumlah = $('.jumlah').val()
-        @if ($discount)
+        @if ($discount && $discountcategory)
+          total = {{ $product->price * (1 - ($discount->percentage + $discountcategory->percentage) / 100) }} * jumlah;
+        @elseif ($discount)
           total = {{ $product->price * (1 - $discount->percentage / 100) }} * jumlah;
+        @elseif ($discountcategory)
+          total = {{ $product->price * (1 - $discountcategory->percentage / 100) }} * jumlah;
         @else
           total = {{ $product->price }} * jumlah;
         @endif

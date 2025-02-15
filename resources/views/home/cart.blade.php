@@ -42,6 +42,7 @@
               @foreach ($carts as $cart)
               @php
                 $discount = $discounts->where('id_barang', $cart->product->id)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
+                $discountcategory = $discountcategories->where('category', $cart->product->category)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
                 $total_weight += 1 * $cart->jumlah;
               @endphp
               <input type="hidden" name="id_produk[]" value="{{ $cart->product->id }}">
@@ -51,11 +52,18 @@
                 <td class="product-remove"><a href="/delete_from_cart/{{ $cart->id }}"><i class="far fa-window-close"></i></a></td>
                 <td class="product-image"><img src="/uploads/{{ $cart->product->foto1 }}" alt=""></td>
                 <td class="product-name">{{ $cart->product->product_name }}</td>
-                @if ($discount)
-                <td class="product-price">RP {{ number_format($cart->product->price * (1 - $discount->percentage / 100)) }}</td>
-                @else
-                <td class="product-price">{{ "Rp ". number_format($cart->product->price) }}</td>
-                @endif
+                <td class="product-price">
+                    RP 
+                    @if ($discount && $discountcategory)
+                        {{ number_format($cart->product->price * (1 - ($discount->percentage + $discountcategory->percentage) / 100)) }}
+                    @elseif ($discount)
+                        {{ number_format($cart->product->price * (1 - $discount->percentage / 100)) }}
+                    @elseif ($discountcategory)
+                        {{ number_format($cart->product->price * (1 - $discountcategory->percentage / 100)) }}
+                    @else
+                        {{ number_format($cart->product->price) }}
+                    @endif
+                </td>
                 <td class="product-quantity">{{ $cart->jumlah }}</td>
                 <td class="product-total">{{ "Rp ". number_format($cart->total) }}</td>
               </tr>

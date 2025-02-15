@@ -59,6 +59,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/barang">Data Barang</a>
                         <a class="collapse-item" href="/discounts">Data Diskon</a>
+                        <a class="collapse-item" href="/discount-categories">Data Diskon Kategori</a>
                     </div>
                 </div>
             </li>

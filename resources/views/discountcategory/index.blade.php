@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Discounts Data')
+@section('title', 'Discount Categories Data')
 
 @section('content')
 <div class="content">
@@ -8,7 +8,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Discounts</h4>
+          <h4 class="card-title">Discount Categories</h4>
         </div>
         <div class="card-header">
           <a href="#modal-form" class="modal-tambah"><span class="btn btn-round btn-primary ms-3">Add Discounts</span></a>
@@ -21,7 +21,7 @@
                   No
                 </th>
                 <th>
-                  Product
+                  Category
                 </th>
                 <th>
                   Start Date
@@ -50,7 +50,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Form Discount</h5>
+        <h5 class="modal-title">Form Discount Category</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -58,11 +58,10 @@
               <div class="col-md-12">
                   <form class="form-barang">
                       <div class="form-group">
-                          <label for="id_barang">Product Name</label>
-                          <select name="id_barang" id="category" class="form-control">
-                            @foreach ($products as $product)
-                              <option value="{{ $product->id }}">{{ $product->product_name }}</option> 
-                            @endforeach
+                          <label for="category">Category Name</label>
+                          <select name="category" id="category" class="form-control">
+                              <option value="buah">Buah</option>
+                              <option value="sayur">Sayur</option>
                           </select>
                       </div>
                       <div class="form-group">
@@ -97,14 +96,14 @@
     <script>
         $(function(){
             $.ajax({
-                url : '/api/discounts',
+                url : '/api/discountcategories',
                 success : function({data}){
                     let row;
                     data.map(function(val, index){
                         row += `
                         <tr>
                             <td>${index+1}</td>
-                            <td>${val.product.product_name}</td>
+                            <td>${val.category}</td>
                             <td>${val.start_date}</td>
                             <td>${val.end_date}</td>
                             <td>${val.percentage}%</td>
@@ -127,7 +126,7 @@
       
                 if (confirm_dialog){
                     $.ajax({
-                        url : '/api/discounts/' + id,
+                        url : '/api/discountcategories/' + id,
                         type : "DELETE",
                         headers: {
                             "Authorization": token
@@ -154,7 +153,7 @@
                     const formdata = new FormData(this);
 
                     $.ajax({
-                        url : 'api/discounts',
+                        url : 'api/discountcategories',
                         type : 'POST',
                         data : formdata,
                         cache : false,
@@ -176,7 +175,7 @@
             $(document).on('click', '.modal-ubah', function(){
                 $('modal-form').modal('show');
                 const id = $(this).data('id');
-                $.get('/api/discounts/' + id, function({data}){
+                $.get('/api/discountcategories/' + id, function({data}){
                     $('input[name="start_date"]').val(data.start_date);
                     $('input[name="end_date"]').val(data.end_date);
                     $('input[name="percentage"]').val(data.percentage);
@@ -194,7 +193,7 @@
                     const formdata = new FormData(this);
 
                     $.ajax({
-                        url :  `api/discounts/${id}?_method=PUT`,
+                        url :  `api/discountcategories/${id}?_method=PUT`,
                         type : 'POST',
                         data : formdata,
                         cache : false,

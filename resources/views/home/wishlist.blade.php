@@ -35,18 +35,26 @@
             <tbody>
               <input type="hidden" name="id_customer" value="{{ Auth::guard('webcustomer')->user()->id }}">
               @foreach ($wishlists as $wishlist)
-              {{-- @php
+              @php
                 $discount = $discounts->where('id_barang', $wishlist->product->id)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
-              @endphp --}}
+                $discountcategory = $discountcategories->where('category', $wishlist->product->category)->where('start_date', '<=', now())->where('end_date', '>=', now())->first();
+              @endphp
               <tr class="table-body-row">
                 <td class="product-remove"><a href="/delete_from_wishlist/{{ $wishlist->id }}"><i class="far fa-window-close"></i></a></td>
                 <td class="product-image"><img src="/uploads/{{ $wishlist->product->foto1 }}" alt=""></td>
                 <td class="product-name"><a class="text-dark" href="/store/{{ $wishlist->product->id }}">{{ $wishlist->product->product_name }}</a></td>
-                {{-- @if ($discount)
-                <td class="product-price">RP {{ number_format($wishlist->product->price * (1 - $discount->percentage / 100)) }}</td>
-                @else --}}
-                <td class="product-price">{{ "Rp ". number_format($wishlist->product->price) }}</td>
-                {{-- @endif --}}
+                <td class="product-price">
+                    RP 
+                    @if ($discount && $discountcategory)
+                        {{ number_format($wishlist->product->price * (1 - ($discount->percentage + $discountcategory->percentage) / 100)) }}
+                    @elseif ($discount)
+                        {{ number_format($wishlist->product->price * (1 - $discount->percentage / 100)) }}
+                    @elseif ($discountcategory)
+                        {{ number_format($wishlist->product->price * (1 - $discountcategory->percentage / 100)) }}
+                    @else
+                        {{ number_format($wishlist->product->price) }}
+                    @endif
+                </td>
               </tr>
               @endforeach
             </tbody>
