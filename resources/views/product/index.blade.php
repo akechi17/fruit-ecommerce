@@ -36,14 +36,8 @@
                   Img 1
                 </th>
                 <th>
-                  Img 2
+                Deskripsi
                 </th>
-                <th>
-                  Img 3
-                  </th>
-                  <th>
-                  Deskripsi
-                  </th>
                 <th class='text-center'>
                   Action
                 </th>
