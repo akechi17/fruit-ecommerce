@@ -203,7 +203,7 @@ class HomeController extends Controller
     public function checkout(){
         $about = About::first();
         $carts = Cart::where('id_customer', Auth::guard('webcustomer')->user()->id)->where('is_checkout', 0)->get();
-        $orders = Order::where('id_customer', Auth::guard('webcustomer')->user()->id)->first();
+        $orders = Order::where('id_customer', Auth::guard('webcustomer')->user()->id)->orderBy('created_at', 'desc')->first();
         return view('home.checkout', compact('about', 'carts', 'orders'));
     }
 
