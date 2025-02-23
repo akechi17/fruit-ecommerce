@@ -74,23 +74,23 @@
       </div>
     </div>
     <div class="row">
-      @foreach ($latest_products as $product)
+      @foreach ($latest_products as $latest_product)
       <div class="col-lg-4 col-md-6 text-center">
         <div class="single-product-item">
           <div class="product-image">
-            <a href="/store/{{ $product->id }}"><img src="../uploads/{{ $product->foto1 }}" alt=""></a>
+            <a href="/store/{{ $latest_product->id }}"><img src="../uploads/{{ $latest_product->foto1 }}" alt=""></a>
           </div>
-          <h3>{{ $product->product_name }}</h3>
+          <h3>{{ $latest_product->product_name }}</h3>
           @if ($discount && $discountcategory)
-          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - ($discount->percentage + $discountcategory->percentage) / 100)) }} </p>
+          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($latest_product->price) }}</del> RP {{ number_format($latest_product->price * (1 - ($discount->percentage + $discountcategory->percentage) / 100)) }} </p>
           @elseif ($discount)
-          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discount->percentage / 100)) }} </p>
+          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($latest_product->price) }}</del> RP {{ number_format($latest_product->price * (1 - $discount->percentage / 100)) }} </p>
           @elseif ($discountcategory)
-          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($product->price) }}</del> RP {{ number_format($product->price * (1 - $discountcategory->percentage / 100)) }} </p>
+          <p class="product-price"><span>Per Kg</span> <del>RP {{ number_format($latest_product->price) }}</del> RP {{ number_format($latest_product->price * (1 - $discountcategory->percentage / 100)) }} </p>
           @else
-          <p class="product-price"><span>Per Kg</span> RP {{ number_format($product->price) }} </p>
+          <p class="product-price"><span>Per Kg</span> RP {{ number_format($latest_product->price) }} </p>
           @endif
-          <a href="/store/{{ $product->id }}" class="cart-btn">View Product</a>
+          <a href="/store/{{ $latest_product->id }}" class="cart-btn">View Product</a>
         </div>
       </div>
       @endforeach
