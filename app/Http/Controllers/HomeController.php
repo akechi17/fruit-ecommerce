@@ -27,9 +27,7 @@ class HomeController extends Controller
     
     public function products($category)
     {
-        $products = Product::where('category', $category)
-                        ->where('stok', '>', 0)
-                        ->paginate(1); // Display 9 products per page
+        $products = Product::where('category', $category)->where('stok', '>', 0)->get();
         $discounts = Discount::all();
         $discountcategories = DiscountCategory::all();
         return view('home.products', compact('products', 'discounts', 'discountcategories'));
